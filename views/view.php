@@ -13,8 +13,18 @@
     
     foreach ($articles as $article): ?>
     <article>
-        <h2><?php echo $article['art_title'] ?></h2>
-        <p><?php echo $article['art_content'] ?></p>
+        <h2><?php echo $article->getTitle() ?></h2> 
+        <p><?php echo $article->getContent() ?></p>
+        <p>Ajouté le
+            <?php
+            $date = date_create($article->getDate());
+            echo date_format($date, 'd/m/Y');
+
+            ?>
+             
+         </p>
+
+
     </article>
     <?php endforeach ?>
     <footer class="footer">

@@ -2,9 +2,8 @@
 
 // Homme page.
 
-$app->get('/', function() {
-	require '../src/model.php';
-	$articles = getArticles();
+$app->get('/', function() use ($app) {
+	$articles = $app['dao.article']->findAll();
 
 	ob_start();						// Start buffering HTML
 	require '../views/view.php';
