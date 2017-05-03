@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="">
+	<title>OCBlog</title>
+</head>
+<body>
+	<header>
+		<h1>OCBlog</h1>
+	</header>
+	{% for article in articles %}
+	<article>
+		<h2>{{ article.title }}</h2>
+		<p>{{ article.content }}</p>
+	</article>
+	{% endfor %}
+	<footer class="footer">
+	</footer>
+
+
+</body>
+
+</html>

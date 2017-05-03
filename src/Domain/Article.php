@@ -2,7 +2,7 @@
 
 namespace OCBlog\Domain;
 
-class Article 
+class Article
 {
     /**
      * Article id.
