@@ -1,24 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8" />
-	<link rel="stylesheet" type="text/css" href="">
-	<title>OCBlog</title>
-</head>
-<body>
-	<header>
-		<h1>OCBlog</h1>
-	</header>
-	{% for article in articles %}
-	<article>
-		<h2>{{ article.title }}</h2>
-		<p>{{ article.content }}</p>
-	</article>
-	{% endfor %}
-	<footer class="footer">
-	</footer>
+{% extends "layout.html.twig" %}
 
+{% block title %}Home{% endblock %}
 
-</body>
-
-</html>
+{% block content %}
+{% for article in articles %}
+<article>
+    <h2><a class="articleTitle" href="{{ path('article', { 'id': article.id }) }}">{{ article.title }}</a></h2>
+    <p>{{ article.content }}</p>
+</article>
+{% endfor %}
+{% endblock %}

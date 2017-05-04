@@ -17,3 +17,9 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 $app['dao.article'] =function ($app) {
 	return new OCBlog\DAO\ArticleDAO($app['db']);
 };
+
+$app['dao.comment'] = function ($app) {
+    $commentDAO = new OCBlog\DAO\CommentDAO($app['db']);
+    $commentDAO->setArticleDAO($app['dao.article']);
+    return $commentDAO;
+};
