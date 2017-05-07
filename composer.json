@@ -2,7 +2,8 @@
 	"require": {
 		"silex/silex": "~2.0",
 		"doctrine/dbal": "~2.5",
-		"twig/twig": "~1.28"
+		"twig/twig": "~1.28",
+		"symfony/security": "2.8|3.0.*"
 	},
 	"autoload": {
 		"psr-4": {"OCBlog\\": "src"}
