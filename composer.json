@@ -3,12 +3,10 @@
 		"silex/silex": "~2.0",
 		"doctrine/dbal": "~2.5",
 		"twig/twig": "~1.28",
-<<<<<<< HEAD
 		"symfony/twig-bridge": "~2.8|3.0.*",
 		"symfony/security": "~2.8|3.0.*"
-=======
-		"symfony/security": "2.8|3.0.*"
->>>>>>> 15fccfde65199b5690cc461db74aa3f5b9c7c2fc
+
+
 	},
 	"autoload": {
 		"psr-4": {"OCBlog\\": "src"}
