@@ -4,8 +4,13 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "hash": "d1687a0c6551ef0c6bd5b10e26264711",
     "content-hash": "dcf7cba05df4180f7b3c14b975d6fed1",
+=======
+    "hash": "eb2415310f4257c7f5c1d4f4efa42980",
+    "content-hash": "657a2d2b786b2288ab8bbf5ab24310d7",
+>>>>>>> 15fccfde65199b5690cc461db74aa3f5b9c7c2fc
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1461,6 +1466,7 @@
             "time": "2016-07-17 13:54:30"
         },
         {
+<<<<<<< HEAD
             "name": "symfony/twig-bridge",
             "version": "v3.0.9",
             "source": {
@@ -1542,6 +1548,8 @@
             "time": "2016-07-28 11:13:34"
         },
         {
+=======
+>>>>>>> 15fccfde65199b5690cc461db74aa3f5b9c7c2fc
             "name": "twig/twig",
             "version": "v1.33.2",
             "source": {
