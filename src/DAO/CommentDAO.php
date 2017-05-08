@@ -55,6 +55,37 @@ class CommentDAO extends DAO
         return $comments;
     }
 
+    /** 
+     * Saves a comment into the database.
+     *
+     * @param \OCBlog\Domain\Comment Comment to save
+     */
+
+    public function save(Comment $comment)
+    {
+        $commentData = array(
+            'art_id' => $comment->getArticle()->getId(),
+            'usr_id' => $comment->getAuthor()->getId(),
+            'com_content' => $comment->getContent()
+        );
+
+        if ($comment->getId())
+        {
+            //The comment exist->update.
+            $this->getDb()->update('comment', $commentData, array('com_id' => $comment->getId()));
+        }
+        else
+        {
+            //The comment has never been saved -> insert it
+            $this->getDb()->insert('comment', $commentData);
+            // Get the id of the newly created comment and set it on the object.
+            $id = $this->getDb()->lastInsertId();
+            $comment->setId($id);
+
+        }
+
+    }
+
     /**
      * Creates an Comment object based on a DB row.
      *
@@ -78,7 +109,7 @@ class CommentDAO extends DAO
             // Find and set the associated author
             $userId =$row['usr_id'];
             $user =$this->userDAO->find($userId);
-            $comment = setAuthor($user);
+            $comment->setAuthor($user);
         }
         
         return $comment;
