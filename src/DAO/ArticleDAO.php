@@ -47,7 +47,7 @@ class ArticleDAO extends DAO
         $article->setId($row['art_id']);
         $article->setTitle($row['art_title']);
         $article->setContent($row['art_content']);
-        $article->setDate($row['art_date']);
+        
         return $article;
     }
 }
