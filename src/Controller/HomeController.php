@@ -44,13 +44,32 @@ class HomeController {
             $commentFormView = $commentForm->createView();
         }
         $comments = $app['dao.comment']->findAllByArticle($id);
-        
+
+        /**
+         *
+         *
+         */
+        $comments_by_id=[];
+        foreach ($comments as $comment)
+        {
+            $comments_by_id[$comment->getId()] = $comment;
+        }
+        foreach ($comments as $key => $comment) {
+            if($comment->getParentId() != 0)
+            {
+                $comments_by_id[$comment->getParentId()]->childrens[]=$comment;
+                unset($comments[$key]);
+            }
+
+       }
+
         return $app['twig']->render('article.html.twig', array(
             'article' => $article,
             'comments' => $comments,
-            'commentForm' => $commentFormView));
+            'commentForm' => $commentFormView,
+
+        ));
     }
-    
     /**
      * User login controller.
      *

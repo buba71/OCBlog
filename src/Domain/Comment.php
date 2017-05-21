@@ -2,35 +2,44 @@
 
 namespace OCBlog\Domain;
 
-class Comment 
+class Comment
 {
     /**
      * Comment id.
      *
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * Comment author.
      *
      * @var \OCBlog\Domain\User
      */
-    private $author;
+    protected $author;
 
     /**
      * Comment content.
      *
      * @var integer
      */
-    private $content;
+    protected $content;
 
     /**
      * Associated article.
      *
      * @var \OCBlog\Domain\Article
      */
-    private $article;
+    protected $article;
+
+    /**
+     *Id of parent comment
+     *
+     * @var integer
+     */
+    protected $parent_id;
+
+    //protected $children;
 
     public function getId() {
         return $this->id;
@@ -65,6 +74,28 @@ class Comment
 
     public function setArticle(Article $article) {
         $this->article = $article;
+        return $this;
+    }
+
+    public function getParentId()
+    {
+        return $this->parent_id;
+    }
+
+    public function setParentid($id)
+    {
+        $this->parent_id = $id;
+        return $this;
+    }
+
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    public function setChildren($children)
+    {
+        $this->children = $children;
         return $this;
     }
 }

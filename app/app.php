@@ -10,7 +10,8 @@ ExceptionHandler::register();
 // Register service providers.
 $app->register(new Silex\Provider\DoctrineServiceProvider());
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
-	'twig.path' => __DIR__.'/../views',
+	'twig.path' 	=> __DIR__.'/../views',
+	'twig.options'  => array('debug' => true),
 ));
 $app->register(new Silex\Provider\AssetServiceProvider(), array(
 	'asset.version' => 'v1'

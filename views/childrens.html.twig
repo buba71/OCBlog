@@ -1,0 +1,22 @@
+<div class= "panel panel-default">
+
+	
+
+	<div class="panel-body">
+		<p>{{ comment.content}}</p>
+	</div>
+</div>
+
+<div style="margin-left:50px">
+
+	{% if comment.childrens is defined %}
+
+	{% for comment in comment.childrens %}
+	
+	{% include 'childrens.html.twig' with {'comment': comment} %}
+	
+	{% endfor %}
+
+
+{% endif %}
+</div>
