@@ -27,8 +27,11 @@ class HomeController {
      * @param Application $app Silex application
      */
     public function articleAction($id, Request $request, Application $app) {
+
         $article = $app['dao.article']->find($id);
         $commentFormView = null;
+        
+
         if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')) {
             // A user is fully authenticated : he can add comments
             $comment = new Comment();
@@ -41,14 +44,20 @@ class HomeController {
                 $app['dao.comment']->save($comment);
                 $app['session']->getFlashBag()->add('success', 'Your comment was successfully added.');
             }
+
+
             $commentFormView = $commentForm->createView();
+
+
+
         }
-        $comments = $app['dao.comment']->findAllByArticle($id);
 
         /**
+         * Create an array of all comments with childrens
          *
-         *
+         * @param $comments->findAllByArticle($id).
          */
+        $comments = $app['dao.comment']->findAllByArticle($id);
         $comments_by_id=[];
         foreach ($comments as $comment)
         {
@@ -66,9 +75,34 @@ class HomeController {
         return $app['twig']->render('article.html.twig', array(
             'article' => $article,
             'comments' => $comments,
-            'commentForm' => $commentFormView,
-
+            'commentForm' => $commentFormView
         ));
+
+
+
+
+    }
+
+
+    public function subCommentControllerAction (request $request, Application $app)
+    {
+        $subCommentFormView = null;
+        $comment = new Comment();
+        $subCommentForm = $app['form.factory']->create(CommentType::class, $comment);
+        $subCommentForm->handleRequest($request);
+            if ($subCommentForm->isSubmitted() && $subCommentForm->isValid()) {
+                $app['dao.comment']->save($comment);
+                $app['session']->getFlashBag()->add('success', 'Your comment was successfully added.');
+            }
+
+         $subCommentFormView = $subCommentForm->createView();
+
+         return $app['twig']->render('commentReply_form.html.twig', array(
+            'subCommentForm' => $subCommentFormView
+            ));
+
+
+       
     }
     /**
      * User login controller.

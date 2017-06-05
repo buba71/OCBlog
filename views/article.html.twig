@@ -10,25 +10,19 @@
     <p>{{ article.content }}</p>
 
     <h3>Comments</h3>
-
-
-
     {% for comment in comments %}
 
-
-
-        {% include'childrens.html.twig'with{'comment': comment} %}
-
-
+        {% include'comments.html.twig'with{'comment': comment} %}
 
     {% else %}
         No comments yet.
     {% endfor %}
-
-    <h3>Add a Comment</h3>
+    <div id="form-comment">
+    <h3>Ajouter un commentaire</h3>
     {% if commentForm %}
         {{ form_start(commentForm)  }}
             <div class="form-group">
+                <input type="hidden" name="parent_id" id="parent_id" value="0">
                 {{ form_errors(commentForm.content) }}
                 {{ form_widget(commentForm.content, { 'attr': {
                 'row' : '4',
@@ -38,18 +32,30 @@
 
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Publish comment" />
+                <input type="submit" class="btn btn-primary" value="Publier le commentaire" />
+
             </div>
         {{ form_end(commentForm) }}
         {% for flashMessage in app.session.flashbag.get('success') %}
             <div class="alert alert-success">
                 {{ flashMessage }}
             </div>
-
         {% endfor %}
 
-    {% else %}
-    	<a href="{{ path('login') }}">Log in</a> to add comments.
+         {% else %}
+        <a href="{{ path('login') }}">Log in</a> to add comments.
     {% endif %}
-</p>
+    </div>
+
+    <div id="form-subComment">
+<!--  -->
+
+
+
+
+
+    </div>
+
+
+
 {% endblock %}

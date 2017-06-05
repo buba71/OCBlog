@@ -39,7 +39,13 @@ class Comment
      */
     protected $parent_id;
 
-    //protected $children;
+    /**
+     *
+     *@var integer
+     */
+    protected $depth;
+
+
 
     public function getId() {
         return $this->id;
@@ -82,20 +88,22 @@ class Comment
         return $this->parent_id;
     }
 
-    public function setParentid($id)
+    public function setParentId($id)
     {
         $this->parent_id = $id;
         return $this;
     }
 
-    public function getChildren()
+    public function getDepth()
     {
-        return $this->children;
+        return $this->depth;
     }
 
-    public function setChildren($children)
+    public function setDepth($depth)
     {
-        $this->children = $children;
+        $this->depth = $depth;
         return $this;
     }
+
+
 }

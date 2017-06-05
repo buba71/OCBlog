@@ -53,7 +53,7 @@ class ArticleDAO extends DAO
             $this->getDb()->update('article', $articleData, array('art_id' => $article->getId()));
         } else {
             // The article has never been saved : insert it
-            $this->getDb()->insert('rticle', $articleData);
+            $this->getDb()->insert('article', $articleData);
             // Get the id of the newly created article and set it on the entity.
             $id = $this->getDb()->lastInsertId();
             $article->setId($id);

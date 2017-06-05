@@ -24,7 +24,7 @@ class CommentDAO extends DAO
     public function setUserDAO(UserDAO $userDAO)
     {
         $this->userDAO = $userDAO;
-        
+
     }
 
     /**
@@ -40,7 +40,7 @@ class CommentDAO extends DAO
 
         // art_id is not selected by the SQL query
         // The article won't be retrieved during domain objet construction
-        $sql = "SELECT com_id, com_content, parent_id, usr_id from comment where art_id=? order by com_id";
+        $sql = "SELECT com_id, com_content, parent_id, usr_id, depth from comment where art_id=? order by com_id";
         $result = $this->getDb()->fetchAll($sql, array($articleId));
 
         // Convert query result to an array of domain objects
@@ -101,33 +101,76 @@ class CommentDAO extends DAO
 
     public function save(Comment $comment)
     {
-        $commentData = array(
-            'art_id' => $comment->getArticle()->getId(),
-            'usr_id' => $comment->getAuthor()->getId(),
-            'com_content' => $comment->getContent()
-        );
 
-        if ($comment->getId())
-        {
-            //The comment exist->update.
-            $this->getDb()->update('comment', $commentData, array('com_id' => $comment->getId()));
-        }
-        else
-        {
-            //The comment has never been saved -> insert it
-            $this->getDb()->insert('comment', $commentData);
-            // Get the id of the newly created comment and set it on the object.
-            $id = $this->getDb()->lastInsertId();
-            $comment->setId($id);
+        $parent_id = isset($_POST['parent_id']) ? $_POST['parent_id'] : 0 ;
+        $depth = 0;
 
-        }
+        if($parent_id !==0)
+            {
+                $sql = "SELECT com_id, depth FROM comment WHERE com_id = ?";
+                $com = $this->getDb()->fetchArray($sql, array($parent_id));
+
+               /** if ($com == false)
+                {
+                    throw new \Exception('Le parent_id n\'éxiste pas !');
+                }*/
+
+                $depth = $com['1'] + 1;
+
+            }
+
+
+
+            $commentData = array(
+                'art_id' => $comment->getArticle()->getId(),
+                'usr_id' => $comment->getAuthor()->getId(),
+                'com_content' => $comment->getContent(),
+                'parent_id' => $_POST['parent_id'],
+                'depth' => $depth
+            );
+
+
+
+            if ($depth >3)
+            {
+                echo " vous ne pouvez pas répondre à ce commentaire";
+            }
+            else
+            {
+                if ($comment->getId())
+                    {
+                        //The comment exist->update.
+                        $this->getDb()->update('comment', $commentData, array('com_id' => $comment->getId()));
+                    }
+                    else
+                    {
+                        //The comment has never been saved -> insert it
+                        $this->getDb()->insert('comment', $commentData);
+                        // Get the id of the newly created comment and set it on the object.
+                        $id = $this->getDb()->lastInsertId();
+                        $comment->setId($id);
+
+                    }
+
+
+            }
 
     }
 
 
      public function delete($id) {
+
+        // récupère le commentaire to delete
+        $sql ="SELECT * FROM comment WHERE com_id= ? ";
+        $deleteCom = $this->getDb()->fetchAll($sql, array($id));
+
+        var_dump($deleteCom);
+
+
         // Delete the comment
         $this->getDb()->delete('comment', array('com_id' => $id));
+
+        $this->getDb()->update('comment', array('parent_id' => $deleteCom->getParentId()), array('parent_id' => $deleteCom->getId()));
     }
 
      /**
@@ -136,7 +179,7 @@ class CommentDAO extends DAO
      * @param $articleId The id of the article
      */
     public function deleteAllByArticle($articleId) {
-        $this->getDb()->delete('t_comment', array('art_id' => $articleId));
+        $this->getDb()->delete('comment', array('art_id' => $articleId));
     }
 
      /**
@@ -159,6 +202,7 @@ class CommentDAO extends DAO
         $comment->setId($row['com_id']);
         $comment->setContent($row['com_content']);
         $comment->setParentId($row['parent_id']);
+        $comment->setDepth($row['depth']);
         
 
         if (array_key_exists('art_id', $row)) {

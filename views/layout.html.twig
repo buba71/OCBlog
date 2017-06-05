@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -51,10 +51,37 @@
             <a href="">OCBlog</a> footer.
         </footer>
     </div>
-    
+
+
+
+
     <!-- jQuery -->
     <script src="{{ asset('/lib/jquery/jquery.min.js') }}"></script>
     <!-- JavaScript Boostrap plugin -->
     <script src="{{ asset('/lib/bootstrap/js/bootstrap.min.js') }}"></script>
+    <!-- reply_comments-->
+    <script>
+
+        jQuery(document).ready(function($){
+
+    $('.reply').click(function(e) {
+        e.preventDefault();
+
+        var $form = $('#form-comment');
+        var $this = $(this);
+        var parent_id = $this.data('id');
+        var $comment = $('#comment-' + parent_id);
+
+        $form.find('h3').text('Répondre à ce commentaire');
+        $('#parent_id').val(parent_id);
+        $comment.after($form);
+
+
+        })
+    });
+
+
+
+    </script>
 </body>
 </html>
