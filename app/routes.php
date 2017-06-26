@@ -8,6 +8,9 @@ $app->get('/', "OCBlog\Controller\HomeController::indexAction")
 $app->match('/article/{id}', "OCBlog\Controller\HomeController::articleAction")
 ->bind('article');
 
+// Signal a comment
+$app->get('/comment_signal', "OCBlog\Controller\HomeController::signalCommentAction")->bind('signal_comment');
+
 // Login form
 $app->get('/login', "OCBlog\Controller\HomeController::loginAction")
 ->bind('login');
@@ -48,18 +51,3 @@ $app->match('/admin/user/{id}/edit', "OCBlog\Controller\AdminController::editUse
 $app->get('/admin/user/{id}/delete', "OCBlog\Controller\AdminController::deleteUserAction")
 ->bind('admin_user_delete');
 
-// API : get all articles
-$app->get('/api/articles', "OCBlog\Controller\ApiController::getArticlesAction")
-->bind('api_articles');
-
-// API : get an article
-$app->get('/api/article/{id}', "OCBlog\Controller\ApiController::getArticleAction")
-->bind('api_article');
-
-// API : create an article
-$app->post('/api/article', "OCBlog\Controller\ApiController::addArticleAction")
-->bind('api_article_add');
-
-// API : remove an article
-$app->delete('/api/article/{id}', "OCBlog\Controller\ApiController::deleteArticleAction")
-->bind('api_article_delete');

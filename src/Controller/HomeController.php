@@ -58,7 +58,10 @@ class HomeController {
          * @param $comments->findAllByArticle($id).
          */
         $comments = $app['dao.comment']->findAllByArticle($id);
+
+
         $comments_by_id=[];
+
         foreach ($comments as $comment)
         {
             $comments_by_id[$comment->getId()] = $comment;
@@ -69,7 +72,6 @@ class HomeController {
                 $comments_by_id[$comment->getParentId()]->childrens[]=$comment;
                 unset($comments[$key]);
             }
-
        }
 
         return $app['twig']->render('article.html.twig', array(
@@ -84,23 +86,13 @@ class HomeController {
     }
 
 
-    public function subCommentControllerAction (request $request, Application $app)
+    public function signalCommentAction (Application $app)
     {
-        $subCommentFormView = null;
-        $comment = new Comment();
-        $subCommentForm = $app['form.factory']->create(CommentType::class, $comment);
-        $subCommentForm->handleRequest($request);
-            if ($subCommentForm->isSubmitted() && $subCommentForm->isValid()) {
-                $app['dao.comment']->save($comment);
-                $app['session']->getFlashBag()->add('success', 'Your comment was successfully added.');
-            }
+        $comment = $_GET['id'];
+        $app['dao.comment']->signalComment($comment);
 
-         $subCommentFormView = $subCommentForm->createView();
 
-         return $app['twig']->render('commentReply_form.html.twig', array(
-            'subCommentForm' => $subCommentFormView
-            ));
-
+        return "commentaire"  . $_GET['id'] . " signalé !";
 
        
     }

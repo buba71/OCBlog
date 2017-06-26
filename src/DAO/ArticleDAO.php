@@ -40,9 +40,9 @@ class ArticleDAO extends DAO
      /**
      * Saves an article into the database.
      *
-     * @param \MicroCMS\Domain\Article $article The article to save
+     * @param \OCBlog\Domain\Article $article The article to save
      */
-    public function save(Article $article) {
+     public function save(Article $article) {
         $articleData = array(
             'art_title' => $article->getTitle(),
             'art_content' => $article->getContent(),
@@ -53,13 +53,12 @@ class ArticleDAO extends DAO
             $this->getDb()->update('article', $articleData, array('art_id' => $article->getId()));
         } else {
             // The article has never been saved : insert it
-            $this->getDb()->insert('article', $articleData);
+            $this->getDb()->insert('article', $articleData);
             // Get the id of the newly created article and set it on the entity.
             $id = $this->getDb()->lastInsertId();
             $article->setId($id);
         }
     }
-
     /**
      * Removes an article from the database.
      *

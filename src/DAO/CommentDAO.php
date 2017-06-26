@@ -40,7 +40,7 @@ class CommentDAO extends DAO
 
         // art_id is not selected by the SQL query
         // The article won't be retrieved during domain objet construction
-        $sql = "SELECT com_id, com_content, parent_id, usr_id, depth from comment where art_id=? order by com_id";
+        $sql = "SELECT com_id, com_content, parent_id, usr_id, depth, sign from comment where art_id=? order by com_id";
         $result = $this->getDb()->fetchAll($sql, array($articleId));
 
         // Convert query result to an array of domain objects
@@ -64,7 +64,7 @@ class CommentDAO extends DAO
      * @return array A list of all comments.
      */
     public function findAll() {
-        $sql = "SELECT * FROM comment ORDER BY com_id DESC";
+        $sql = "SELECT * FROM comment ORDER BY sign DESC";
         $result = $this->getDb()->fetchAll($sql);
 
         // Convert query result to an array of domain objects
@@ -93,7 +93,7 @@ class CommentDAO extends DAO
             throw new \Exception("No comment matching id " . $id);
     }
 
-    /** 
+    /**
      * Saves a comment into the database.
      *
      * @param \OCBlog\Domain\Comment Comment to save
@@ -121,11 +121,12 @@ class CommentDAO extends DAO
 
 
 
+
             $commentData = array(
                 'art_id' => $comment->getArticle()->getId(),
                 'usr_id' => $comment->getAuthor()->getId(),
                 'com_content' => $comment->getContent(),
-                'parent_id' => $_POST['parent_id'],
+                'parent_id' => $_POST['parent_id'],//$comment->getParentId()
                 'depth' => $depth
             );
 
@@ -158,19 +159,34 @@ class CommentDAO extends DAO
     }
 
 
-     public function delete($id) {
+    public function signalComment($id) {
+
+
+        $sql = "SELECT sign FROM comment WHERE com_id= ?";
+        $signalComment = $this->getDb()->fetchArray($sql, array($id));
+
+
+        $signal = $signalComment['0'] + 1;
+        echo "signal" . $signal;
+
+
+        $this->getDB()->update('comment', array('sign'=>$signal), array('com_id'=>$id));
+    }
+
+
+
+
+    public function delete($id) {
 
         // récupère le commentaire to delete
         $sql ="SELECT * FROM comment WHERE com_id= ? ";
         $deleteCom = $this->getDb()->fetchAll($sql, array($id));
 
-        var_dump($deleteCom);
-
 
         // Delete the comment
         $this->getDb()->delete('comment', array('com_id' => $id));
 
-        $this->getDb()->update('comment', array('parent_id' => $deleteCom->getParentId()), array('parent_id' => $deleteCom->getId()));
+        //$this->getDb()->update('comment', array('parent_id' => $deleteCom->getParentId()), array('parent_id' => $deleteCom->getId()));
     }
 
      /**
@@ -203,7 +219,8 @@ class CommentDAO extends DAO
         $comment->setContent($row['com_content']);
         $comment->setParentId($row['parent_id']);
         $comment->setDepth($row['depth']);
-        
+        $comment->setSignal($row['sign']);
+
 
         if (array_key_exists('art_id', $row)) {
             // Find and set the associated article

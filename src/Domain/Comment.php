@@ -45,6 +45,12 @@ class Comment
      */
     protected $depth;
 
+    /**
+     *
+     *@var integer
+     */
+    protected $signal;
+
 
 
     public function getId() {
@@ -102,6 +108,17 @@ class Comment
     public function setDepth($depth)
     {
         $this->depth = $depth;
+        return $this;
+    }
+
+    public function getSignal()
+    {
+        return $this->signal;
+    }
+
+    public function setSignal($signal)
+    {
+        $this->signal = $signal;
         return $this;
     }
 

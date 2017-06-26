@@ -6,6 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ asset('/lib/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/ocblog.css') }}" rel="stylesheet">
+
+    <script type="text/javascript" src="{{ asset('/js/tinymce/tinymce.js') }}"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: "textarea"
+        });
+    </script>
+
     <title>OCBlog - {% block title %}{% endblock %}</title>
 </head>
 <body>
@@ -74,8 +82,29 @@
 
         $form.find('h3').text('Répondre à ce commentaire');
         $('#parent_id').val(parent_id);
-        $comment.after($form);
+        $comment.after("formulaire de réponse");
 
+
+        })
+
+
+    $('.signaler').click(function(e){
+        e.preventDefault();
+
+        var $this = $(this);
+        var comment_id = $this.data('id');
+        var $comment =$('#comment-'+ comment_id);
+
+
+        $.ajax({
+
+            url:"{{ path('signal_comment') }}",
+            data:'id='+ comment_id,
+        })
+        .done(function(data)
+        {
+            $comment.after(data);
+        });
 
         })
     });
