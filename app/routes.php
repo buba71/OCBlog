@@ -8,6 +8,10 @@ $app->get('/', "OCBlog\Controller\HomeController::indexAction")
 $app->match('/article/{id}', "OCBlog\Controller\HomeController::articleAction")
 ->bind('article');
 
+// Reply for a comment
+$app->get('/reply', "OCBlog\Controller\HomeController::subCommentAction")
+->bind('comment_reply');
+
 // Signal a comment
 $app->get('/comment_signal', "OCBlog\Controller\HomeController::signalCommentAction")->bind('signal_comment');
 

@@ -1,0 +1,30 @@
+<div id="form-comment">
+    <h3>Répondre à ce commentaire</h3>
+
+    {% if subCommentForm %}
+        {{ form_start(subCommentForm)  }}
+            <div class="form-group">
+                <input type="hidden" name="parent_id" id="parent_id" value="0">
+                {{ form_errors(subCommentForm.content) }}
+                {{ form_widget(subCommentForm.content, { 'attr': {
+                'row' : '4',
+                'class': 'form-control',
+                'placeholder': 'Enter your comment'
+            }}) }}
+
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Publier le commentaire" />
+
+            </div>
+        {{ form_end(subCommentForm) }}
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+
+         {% else %}
+        <a href="{{ path('login') }}">Log in</a> to add comments.
+    {% endif %}
+    </div>

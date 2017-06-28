@@ -99,8 +99,12 @@ class CommentDAO extends DAO
      * @param \OCBlog\Domain\Comment Comment to save
      */
 
-    public function save(Comment $comment)
+    public function save(Comment $comment, $parentId)
     {
+        var_dump($comment);
+        var_dump($parentId);
+        die();
+
 
         $parent_id = isset($_POST['parent_id']) ? $_POST['parent_id'] : 0 ;
         $depth = 0;
@@ -126,9 +130,10 @@ class CommentDAO extends DAO
                 'art_id' => $comment->getArticle()->getId(),
                 'usr_id' => $comment->getAuthor()->getId(),
                 'com_content' => $comment->getContent(),
-                'parent_id' => $_POST['parent_id'],//$comment->getParentId()
+                'parent_id' => $comment->getParentId(),
                 'depth' => $depth
             );
+
 
 
 

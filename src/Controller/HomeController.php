@@ -30,7 +30,8 @@ class HomeController {
 
         $article = $app['dao.article']->find($id);
         $commentFormView = null;
-        
+
+
 
         if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')) {
             // A user is fully authenticated : he can add comments
@@ -83,6 +84,40 @@ class HomeController {
 
 
 
+    }
+
+    public function subCommentAction (Request $request, Application $app)
+    {
+        $subCommentFormview = null;
+        $parentId = $_GET['parent_id'];
+
+        echo $parentId;
+
+        if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // A user is fully authenticated : he can add comments
+            $comment = new Comment();
+            //$comment->setArticle($article);
+            $user = $app['user'];
+            $comment->setAuthor($user);
+
+
+            $subCommentForm = $app['form.factory']->create(CommentType::class, $comment);
+            $subCommentForm->handleRequest($request);
+            if ($subCommentForm->isSubmitted() && $subCommentForm->isValid()) {
+                $app['dao.comment']->save($comment);
+                $app['session']->getFlashBag()->add('success', 'Your comment was successfully added.');
+            }
+
+
+            $subCommentFormView = $subCommentForm->createView();
+
+        }
+
+
+        return $app['twig']->render('commentReply_form.html.twig', array(
+            'subCommentForm' => $subCommentFormView
+
+        ));
     }
 
 
