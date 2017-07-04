@@ -7,7 +7,7 @@
 
 
     <h2>{{ article.title }}</h2>
-    <p>{{ article.content }}</p>
+    <p>{{ article.content |raw }}</p>
 
     <h3>Comments</h3>
     {% for comment in comments %}
@@ -17,39 +17,24 @@
     {% else %}
         No comments yet.
     {% endfor %}
-    <div id="form-comment">
+    <form id="form-Comment" method="post" action="">
     <h3>Ajouter un commentaire</h3>
-
-    {% if commentForm %}
-        {{ form_start(commentForm)  }}
             <div class="form-group">
                 <input type="hidden" name="parent_id" id="parent_id" value="0">
-                {{ form_errors(commentForm.content) }}
-                {{ form_widget(commentForm.content, { 'attr': {
-                'row' : '4',
-                'class': 'form-control',
-                'placeholder': 'Enter your comment'
-            }}) }}
+                <input type="textarea" class="form-control" name="commentContent" placeholder= "Votre commentaire" required="true">
 
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Publier le commentaire" />
+                <input type="submit" class="btn btn-primary" value="publier" />
 
             </div>
-        {{ form_end(commentForm) }}
+</form>
+
         {% for flashMessage in app.session.flashbag.get('success') %}
             <div class="alert alert-success">
                 {{ flashMessage }}
             </div>
         {% endfor %}
-
-         {% else %}
-        <a href="{{ path('login') }}">Log in</a> to add comments.
-    {% endif %}
-    </div>
-
-    <div id="form-subComment">
-<!--  -->
 
 
 

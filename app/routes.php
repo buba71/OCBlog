@@ -9,11 +9,12 @@ $app->match('/article/{id}', "OCBlog\Controller\HomeController::articleAction")
 ->bind('article');
 
 // Reply for a comment
-$app->get('/reply', "OCBlog\Controller\HomeController::subCommentAction")
+$app->match('/reply', "OCBlog\Controller\HomeController::subCommentAction")
 ->bind('comment_reply');
 
 // Signal a comment
-$app->get('/comment_signal', "OCBlog\Controller\HomeController::signalCommentAction")->bind('signal_comment');
+$app->get('/comment_signal', "OCBlog\Controller\HomeController::signalCommentAction")
+->bind('signal_comment');
 
 // Login form
 $app->get('/login', "OCBlog\Controller\HomeController::loginAction")

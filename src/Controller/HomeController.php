@@ -30,28 +30,30 @@ class HomeController {
 
         $article = $app['dao.article']->find($id);
         $commentFormView = null;
+        if(isset($_POST['commentContent']) && !empty($_POST['commentContent'])) {
+
+        $content = $_POST['commentContent'];
+        $parent_id = $_POST['parent_id'];
 
 
 
-        if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // A user is fully authenticated : he can add comments
-            $comment = new Comment();
-            $comment->setArticle($article);
-            $user = $app['user'];
-            $comment->setAuthor($user);
-            $commentForm = $app['form.factory']->create(CommentType::class, $comment);
-            $commentForm->handleRequest($request);
-            if ($commentForm->isSubmitted() && $commentForm->isValid()) {
-                $app['dao.comment']->save($comment);
-                $app['session']->getFlashBag()->add('success', 'Your comment was successfully added.');
-            }
+        $comment = new Comment();
+        $comment->setArticle($article);
+        $user = $app['user'];
+        $comment->setAuthor($user);
+        $comment->setContent($content);
+        $comment->setParentId($parent_id);
 
-
-            $commentFormView = $commentForm->createView();
-
-
+        $app['dao.comment']->save($comment);
+        $app['session']->getFlashBag()->add('success', 'Votre commentaire a bien été ajouté.');
 
         }
+
+        else{
+        $app['session']->getFlashBag()->add('danger', 'Your comment was successfully added.');
+        }
+
+        //}
 
         /**
          * Create an array of all comments with childrens
@@ -86,50 +88,28 @@ class HomeController {
 
     }
 
-    public function subCommentAction (Request $request, Application $app)
+
+    public function subCommentAction (Application $app)
     {
-        $subCommentFormview = null;
-        $parentId = $_GET['parent_id'];
-
-        echo $parentId;
-
-        if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')) {
-            // A user is fully authenticated : he can add comments
-            $comment = new Comment();
-            //$comment->setArticle($article);
-            $user = $app['user'];
-            $comment->setAuthor($user);
-
-
-            $subCommentForm = $app['form.factory']->create(CommentType::class, $comment);
-            $subCommentForm->handleRequest($request);
-            if ($subCommentForm->isSubmitted() && $subCommentForm->isValid()) {
-                $app['dao.comment']->save($comment);
-                $app['session']->getFlashBag()->add('success', 'Your comment was successfully added.');
-            }
-
-
-            $subCommentFormView = $subCommentForm->createView();
-
-        }
-
+        $parent_id = $_GET['parent_id'];
 
         return $app['twig']->render('commentReply_form.html.twig', array(
-            'subCommentForm' => $subCommentFormView
-
-        ));
+            'parentId' => $parent_id
+            ));
     }
+
 
 
     public function signalCommentAction (Application $app)
     {
+
         $comment = $_GET['id'];
+
         $app['dao.comment']->signalComment($comment);
+        $app['session']->getFlashBag()->add('success', 'Commentaire signalé !');
 
+        return $app['twig']->render('signalComment.html.twig');
 
-        return "commentaire"  . $_GET['id'] . " signalé !";
-
-       
     }
     /**
      * User login controller.

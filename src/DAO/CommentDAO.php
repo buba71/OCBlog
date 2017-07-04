@@ -99,11 +99,9 @@ class CommentDAO extends DAO
      * @param \OCBlog\Domain\Comment Comment to save
      */
 
-    public function save(Comment $comment, $parentId)
+    public function save(Comment $comment)
     {
-        var_dump($comment);
-        var_dump($parentId);
-        die();
+
 
 
         $parent_id = isset($_POST['parent_id']) ? $_POST['parent_id'] : 0 ;
@@ -172,8 +170,6 @@ class CommentDAO extends DAO
 
 
         $signal = $signalComment['0'] + 1;
-        echo "signal" . $signal;
-
 
         $this->getDB()->update('comment', array('sign'=>$signal), array('com_id'=>$id));
     }

@@ -1,15 +1,11 @@
 <div class= "panel panel-default" id="comment-{{ comment.id }}">
 	<div class="panel-body">
 
-		{{ comment.content }}<br />
-		<!--{{dump(comment.depth)}}
-		{{dump(comment.parentId)}}
-		{{dump(comment.Id)}} -->
-
-
+		{{ comment.content|raw }}<br />
+		
 
 		{% if comment.depth <= 2 %}
-		<button class ="btn btn-default reply"  data-id = "{{ comment.id }}" >Répondre</button>
+		<button class ="btn btn-default reply"  id= "reply" data-id = "{{ comment.id }}" >Répondre</button>
 		{% endif %}
 		<button class ="btn btn-danger signaler" id= "signaler" data-id = "{{ comment.id }}">signaler</button>
 

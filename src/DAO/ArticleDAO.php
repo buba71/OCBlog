@@ -16,7 +16,7 @@ class ArticleDAO extends DAO
     public function findAll() {
         $sql = "SELECT * FROM article ORDER BY art_id DESC";
         $result = $this->getDb()->fetchAll($sql);
-        
+
         // Convert query result to an array of domain objects
         $articles = array();
         foreach ($result as $row) {
@@ -43,6 +43,8 @@ class ArticleDAO extends DAO
      * @param \OCBlog\Domain\Article $article The article to save
      */
      public function save(Article $article) {
+
+
         $articleData = array(
             'art_title' => $article->getTitle(),
             'art_content' => $article->getContent(),
@@ -58,6 +60,8 @@ class ArticleDAO extends DAO
             $id = $this->getDb()->lastInsertId();
             $article->setId($id);
         }
+
+
     }
     /**
      * Removes an article from the database.

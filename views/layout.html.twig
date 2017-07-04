@@ -72,50 +72,58 @@
 
         jQuery(document).ready(function($){
 
-    $('.reply').click(function(e) {
-        e.preventDefault();
-
-        var $form = $('#form-comment');
-        var $this = $(this);
-        var parent_id = $this.data('id');
-        var $comment = $('#comment-' + parent_id);
-
-        //$form.find('h3').text('Répondre à ce commentaire');
-        $('#parent_id').val(parent_id);
-
-        $.ajax({
-            url:"{{ path('comment_reply') }}",
-            data: 'parent_id=' + parent_id,
-        })
-        .done(function (data)
-            {
-                $comment.after(data);
-            });
 
 
-        })
+        $('.reply').click(function(e) {
+            e.preventDefault();
 
 
-    $('.signaler').click(function(e){
-        e.preventDefault();
-
-        var $this = $(this);
-        var comment_id = $this.data('id');
-        var $comment =$('#comment-'+ comment_id);
 
 
-        $.ajax({
+            var $this = $(this);
+            var parentId = $this.data('id');
+            var $comment = $('#comment-' + parentId);
+            //parentId.attr("disabled","true");
 
-            url:"{{ path('signal_comment') }}",
-            data:'id='+ comment_id,
-        })
-        .done(function(data)
-            {
-                $comment.after(data);
-            });
+
+
+
+            $.ajax({
+                url:"{{ path('comment_reply') }}",
+                data: 'parent_id=' + parentId ,
+            })
+            .done(function (data)
+                {
+
+
+                    $comment.after(data);
+                });
 
         })
-    });
+
+
+        $('.signaler').click(function(e){
+            e.preventDefault();
+
+            var $this = $(this);
+            var comment_id = $this.data('id');
+            var $comment = $('#comment-'+ comment_id);
+
+
+            $.ajax({
+
+                url:"{{ path('signal_comment') }}",
+                data:'id='+ comment_id,
+            })
+            .done(function(data)
+                {
+                    $comment.after(data);
+
+
+                });
+
+            })
+        });
 
 
 
