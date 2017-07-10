@@ -6,6 +6,8 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use OCBlog\Domain\Comment;
 use OCBlog\Form\Type\CommentType;
+use Symfony\Component\Validator\Constraints\Date;
+
 
 class HomeController {
 
@@ -38,19 +40,23 @@ class HomeController {
 
 
         $comment = new Comment();
+        $date  = Date("Y-m-d");
+        $comment->setDateComment($date);
+
+
         $comment->setArticle($article);
-        $user = $app['user'];
+        $user = $app['dao.user']->find(3);
+        
+        
+
         $comment->setAuthor($user);
         $comment->setContent($content);
+
         $comment->setParentId($parent_id);
 
         $app['dao.comment']->save($comment);
-        $app['session']->getFlashBag()->add('success', 'Votre commentaire a bien été ajouté.');
+        $app['session']->getFlashBag()->add('success', 'Votre commentaire a été publié.');
 
-        }
-
-        else{
-        $app['session']->getFlashBag()->add('danger', 'Your comment was successfully added.');
         }
 
         //}

@@ -26,6 +26,13 @@ class Comment
     protected $content;
 
     /**
+     * Date of comment
+     *
+     * @var DateTime
+     */
+    protected $date_comment;
+
+    /**
      * Associated article.
      *
      * @var \OCBlog\Domain\Article
@@ -50,7 +57,6 @@ class Comment
      *@var integer
      */
     protected $signal;
-
 
 
     public function getId() {
@@ -79,6 +85,16 @@ class Comment
         $this->content = $content;
         return $this;
     }
+
+    public function getDate_comment() {
+        return $this->date_comment;
+    }
+
+    public function setDateComment($date){
+        $this->date_comment = $date;
+        return $this;
+    }
+
 
     public function getArticle() {
         return $this->article;

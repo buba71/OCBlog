@@ -4,6 +4,11 @@
 
 {% block content %}
 
+    {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
 
 
     <h2>{{ article.title }}</h2>
@@ -15,7 +20,7 @@
         {% include'comments.html.twig'with{'comment': comment} %}
 
     {% else %}
-        No comments yet.
+        Aucun commentaire.
     {% endfor %}
     <form id="form-Comment" method="post" action="">
     <h3>Ajouter un commentaire</h3>
@@ -30,17 +35,9 @@
             </div>
 </form>
 
-        {% for flashMessage in app.session.flashbag.get('success') %}
-            <div class="alert alert-success">
-                {{ flashMessage }}
-            </div>
-        {% endfor %}
+        
 
 
-
-
-
-    </div>
 
 
 

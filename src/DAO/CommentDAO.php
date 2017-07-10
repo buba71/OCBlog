@@ -40,7 +40,7 @@ class CommentDAO extends DAO
 
         // art_id is not selected by the SQL query
         // The article won't be retrieved during domain objet construction
-        $sql = "SELECT com_id, com_content, parent_id, usr_id, depth, sign from comment where art_id=? order by com_id";
+        $sql = "SELECT com_id, com_content, parent_id, date_comment, usr_id, depth, sign from comment where art_id=? order by com_id";
         $result = $this->getDb()->fetchAll($sql, array($articleId));
 
         // Convert query result to an array of domain objects
@@ -128,6 +128,7 @@ class CommentDAO extends DAO
                 'art_id' => $comment->getArticle()->getId(),
                 'usr_id' => $comment->getAuthor()->getId(),
                 'com_content' => $comment->getContent(),
+                'date_comment' => $comment-> getDAte_comment(),
                 'parent_id' => $comment->getParentId(),
                 'depth' => $depth
             );
@@ -218,6 +219,7 @@ class CommentDAO extends DAO
         $comment = new Comment();
         $comment->setId($row['com_id']);
         $comment->setContent($row['com_content']);
+        $comment->setDateComment($row['date_comment']);
         $comment->setParentId($row['parent_id']);
         $comment->setDepth($row['depth']);
         $comment->setSignal($row['sign']);

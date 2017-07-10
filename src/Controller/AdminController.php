@@ -37,12 +37,20 @@ class AdminController {
         $article = new Article();
         $articleForm = $app['form.factory']->create(ArticleType::class, $article);
         $articleForm->handleRequest($request);
-        if ($articleForm->isSubmitted() && $articleForm->isValid()) {
+        $content=$article->getContent();
+
+        if ($articleForm->isSubmitted() && $articleForm->isValid() && !empty($article->getContent())) {
             $app['dao.article']->save($article);
-            $app['session']->getFlashBag()->add('success', 'The article was successfully created.');
+            $app['session']->getFlashBag()->add('success', 'Le nouvel article a été publié.');
         }
+
+        if ($articleForm->isSubmitted() && $articleForm->isValid() && $article->getContent()== null) {
+            $app['session']->getFlashBag()->add('danger', 'Vous devez entrer un contenu!');
+        }
+
+
         return $app['twig']->render('article_form.html.twig', array(
-            'title' => 'New article',
+            'title' => 'Nouvel article',
             'articleForm' => $articleForm->createView()));
     }
 
@@ -57,12 +65,17 @@ class AdminController {
         $article = $app['dao.article']->find($id);
         $articleForm = $app['form.factory']->create(ArticleType::class, $article);
         $articleForm->handleRequest($request);
-        if ($articleForm->isSubmitted() && $articleForm->isValid()) {
+        if ($articleForm->isSubmitted() && $articleForm->isValid() && !empty($article->getContent())) {
             $app['dao.article']->save($article);
-            $app['session']->getFlashBag()->add('success', 'The article was successfully updated.');
+            $app['session']->getFlashBag()->add('success', 'L\'article a été mis à jour.');
         }
+
+        if ($articleForm->isSubmitted() && $articleForm->isValid() && $article->getContent()== null) {
+            $app['session']->getFlashBag()->add('danger', 'Vous devez entrer un contenu !');
+        }
+
         return $app['twig']->render('article_form.html.twig', array(
-            'title' => 'Edit article',
+            'title' => 'Modifier l\'article',
             'articleForm' => $articleForm->createView()));
     }
 
@@ -77,7 +90,7 @@ class AdminController {
         $app['dao.comment']->deleteAllByArticle($id);
         // Delete the article
         $app['dao.article']->delete($id);
-        $app['session']->getFlashBag()->add('success', 'The article was successfully removed.');
+        $app['session']->getFlashBag()->add('success', 'L\'article a été supprimé.');
         // Redirect to admin home page
         return $app->redirect($app['url_generator']->generate('admin'));
     }
@@ -95,10 +108,10 @@ class AdminController {
         $commentForm->handleRequest($request);
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
             $app['dao.comment']->save($comment);
-            $app['session']->getFlashBag()->add('success', 'The comment was successfully updated.');
+            $app['session']->getFlashBag()->add('success', 'Le commentaire a été mis à jour.');
         }
         return $app['twig']->render('comment_form.html.twig', array(
-            'title' => 'Edit comment',
+            'title' => 'Modifier le commentaire',
             'commentForm' => $commentForm->createView()));
     }
 
@@ -110,7 +123,7 @@ class AdminController {
      */
     public function deleteCommentAction($id, Application $app) {
         $app['dao.comment']->delete($id);
-        $app['session']->getFlashBag()->add('success', 'The comment was successfully removed.');
+        $app['session']->getFlashBag()->add('success', 'Le commentaire a été supprimé.');
         // Redirect to admin home page
         return $app->redirect($app['url_generator']->generate('admin'));
     }
