@@ -103,18 +103,22 @@ class HomeController {
             'parentId' => $parent_id
             ));
     }
-
-
-
+    /**
+     * Signal a comment
+     *
+     * @param $app application
+     * @param Article Id, Comment Id
+     */
     public function signalCommentAction (Application $app)
     {
 
-        $comment = $_GET['id'];
+        $comment = $_GET['commentId'];
+        $article = $_GET['articleId'];
 
         $app['dao.comment']->signalComment($comment);
         $app['session']->getFlashBag()->add('success', 'Commentaire signalé !');
 
-        return $app['twig']->render('signalComment.html.twig');
+        return $app->redirect($app['url_generator']->generate('article', array('id'=>$article)));
 
     }
     /**

@@ -2,8 +2,9 @@
 
 use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Component\Debug\ExceptionHandler;
+use Symfony\Component\HttpFoundation\Request;
 
-// Register global error and exceptio hendlers
+// Register global error and exception handlers
 ErrorHandler::register();
 ExceptionHandler::register();
 
@@ -72,3 +73,21 @@ $app['dao.comment'] = function ($app) {
     $commentDAO->setUserDAO($app['dao.user']);
     return $commentDAO;
 };
+
+//Register error handler
+
+$app->error(function(\Exception $e, Request $request, $code) use ($app){
+	switch ($code){
+		case 403:
+			$message = 'Accès refusé.';
+			break;
+		case 404:
+			$message = 'La ressource demandé n\'a pas été trouvée.';
+			break;
+		default:
+			$message = 'Nous avons rencontré une erreur';
+	}
+
+	return $app['twig']->render('error.html.twig', array('message'=>
+		$message));
+});

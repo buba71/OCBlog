@@ -13,7 +13,10 @@
             selector: "#article_content",
             language: "fr_FR",
             branding: false,
-            theme: "modern"
+            theme: "modern",
+            width: 900,
+            height:300,
+
 
         });
     </script>
@@ -48,7 +51,7 @@
                         {% else %}
                             <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-user"></span> Vous n'êtes pas connecté en tant qu'administrateur<b class="caret"></b></a>
+                                <span class="glyphicon glyphicon-user"> Admin</span><b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="{{ path('login') }}">Se connecter</a></li>
                                 </ul>
@@ -88,44 +91,19 @@
             var parentId = $this.data('id');
             var $comment = $('#comment-' + parentId);
             var $reply = $('#reply-' + parentId);
-
-
-
-
             $.ajax({
                 url:"{{ path('comment_reply') }}",
                 data: 'parent_id=' + parentId ,
             })
             .done(function (data)
                 {
-                    $comment.after(data);
+                    $comment.append(data);
                     $reply.attr("disabled","true");
                 });
 
         })
 
 
-        $('.signaler').click(function(e){
-            e.preventDefault();
-
-            var $this = $(this);
-            var comment_id = $this.data('id');
-            var $comment = $('#comment-'+ comment_id);
-
-
-            $.ajax({
-
-                url:"{{ path('signal_comment') }}",
-                data:'id='+ comment_id,
-            })
-            .done(function(data)
-                {
-                    $comment.after(data);
-
-
-                });
-
-            })
         });
 
 

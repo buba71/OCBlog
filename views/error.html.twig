@@ -1,0 +1,18 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}Error{% endblock %}
+
+{% block content %}
+
+<div class="row" id="error">
+	<div class="col-xs-5">
+
+	<img class="img-responsive pull right" src="{{ asset('/image/homersimpson.gif') }}" alt="ErrorSimpson"/>
+
+	</div>
+	<div class="col-xs-6">
+		<h1>Nous sommes désolés...<br><small>{{ message }}</small></h1>
+	</div>
+</div>
+
+{% endblock %}

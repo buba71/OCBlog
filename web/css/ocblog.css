@@ -14,8 +14,31 @@ body
 {
 	text-decoration: none;
 }
+
 .adminTable
 {
 	margin-top: 20px;
 	margin-bottom: 20px;
+
+}
+
+#error
+{
+	padding-top: 30px;
+	padding-bottom: 10px;
+}
+#form-subComment
+{
+	padding-right: 50px;
+	padding-left:  15px;
+}
+
+.panel-body
+{
+	overflow: hidden;
+	font-family: times;
+}
+article
+{
+
 }

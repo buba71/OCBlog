@@ -1,17 +1,42 @@
 <div class= "panel panel-default" id="comment-{{ comment.id }}">
 	<div class="panel-body">
 
-		{{ comment.content }}{{ comment.date_comment }}<br />
-		
+		{{ comment.content }}  <br /><br />
 
 		{% if comment.depth <= 2 %}
-		<button class ="btn btn-default reply"  id="reply-{{ comment.id }}" data-id = "{{ comment.id }}" >Répondre</button>
+		<div class="control">
+		<em>Ajouté le {{ comment.date_comment }}</em><br />
+		<button class ="btn btn-primary btn-sm reply"  id="reply-{{ comment.id }}" data-id = "{{ comment.id }}" style="text-align:right">Répondre</button>
 		{% endif %}
-		<button class ="btn btn-danger signaler" id= "signaler" data-id = "{{ comment.id }}">signaler</button>
 
+		<!-- Button trigger modal -->
+		<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#commentDial{{ comment.id }}">
+		  signaler
+		</button>
 
-
+		<!-- Modal -->
+		<div class="modal fade" id="commentDial{{ comment.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Confirmation</h4>
+		      </div>
+		      <div class="modal-body">
+		        Vous êtes sur le point de signaler ce commentaire. Etes-vous sûr ?
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+		        <a href="{{ path('signal_comment', { 'commentId':comment.id, 'articleId':article.id }) }}" type="button" class="btn btn-danger">Valider</a>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<br />
+		
+		</div>
 	</div>
+
 </div>
 
 <div style="margin-left:50px">

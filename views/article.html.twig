@@ -5,7 +5,8 @@
 {% block content %}
 
     {% for flashMessage in app.session.flashbag.get('success') %}
-            <div class="alert alert-success">
+            <div class="alert alert-success alert-dismissible" role="alert">
+                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 {{ flashMessage }}
             </div>
         {% endfor %}
@@ -14,7 +15,7 @@
     <h2>{{ article.title }}</h2>
     <p>{{ article.content |raw }}</p>
 
-    <h3>Comments</h3>
+    <h3>Commentaires</h3>
     {% for comment in comments %}
 
         {% include'comments.html.twig'with{'comment': comment} %}
