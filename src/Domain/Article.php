@@ -30,7 +30,7 @@ class Article
      *
      * @var DateTime
      */
-    private $date_art;
+    private $date_article;
 
 
     public function getId() {
@@ -44,11 +44,7 @@ class Article
 
     public function getTitle() {
         return $this->title;
-    }
-
-    public function getDate() {
-        return $this->date_art;
-    }
+    }   
 
     public function setTitle($title) {
         $this->title = $title;
@@ -64,8 +60,12 @@ class Article
         return $this;
     }
 
-    public function setDate($date_art) {
-        $this->date_art = $date_art;
+    public function getDate() {
+        return $this->date_art;
+    }
+
+    public function setDate($date_article) {
+        $this->date_art = $date_article;
         return $this;
-    } 
+    }
 }

@@ -6,11 +6,11 @@
 		{% if comment.depth <= 2 %}
 		<div class="control">
 		<em>Ajouté le {{ comment.date_comment }}</em><br />
-		<button class ="btn btn-primary btn-sm reply"  id="reply-{{ comment.id }}" data-id = "{{ comment.id }}" style="text-align:right">Répondre</button>
+		<button class ="btn btn-custom btn-sm reply"  id="reply-{{ comment.id }}" data-id = "{{ comment.id }}" style="text-align:right">Répondre</button>
 		{% endif %}
 
 		<!-- Button trigger modal -->
-		<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#commentDial{{ comment.id }}">
+		<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#commentDial{{ comment.id }}">
 		  signaler
 		</button>
 
@@ -27,7 +27,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-		        <a href="{{ path('signal_comment', { 'commentId':comment.id, 'articleId':article.id }) }}" type="button" class="btn btn-danger">Valider</a>
+		        <a href="{{ path('signal_comment', { 'commentId':comment.id, 'articleId':article.id }) }}" type="button" class="btn btn-warning">Valider</a>
 		      </div>
 		    </div>
 		  </div>

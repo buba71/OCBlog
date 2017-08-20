@@ -91,3 +91,5 @@ $app->error(function(\Exception $e, Request $request, $code) use ($app){
 	return $app['twig']->render('error.html.twig', array('message'=>
 		$message));
 });
+
+

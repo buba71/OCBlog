@@ -14,7 +14,7 @@ class ArticleDAO extends DAO
      * @return array A list of all articles.
      */
     public function findAll() {
-        $sql = "SELECT * FROM article ORDER BY art_id DESC";
+        $sql = "SELECT art_id, art_title, art_content, DATE_FORMAT(date_article,'%d/%m/%Y') AS date_article FROM article ORDER BY art_id DESC";
         $result = $this->getDb()->fetchAll($sql);
 
         // Convert query result to an array of domain objects
@@ -48,6 +48,7 @@ class ArticleDAO extends DAO
         $articleData = array(
             'art_title' => $article->getTitle(),
             'art_content' => $article->getContent(),
+            'date_article' => $article->getDate()
             );
 
         if ($article->getId()) {
@@ -84,6 +85,7 @@ class ArticleDAO extends DAO
         $article->setId($row['art_id']);
         $article->setTitle($row['art_title']);
         $article->setContent($row['art_content']);
+        $article->setDate($row['date_article']);
         
         return $article;
     }

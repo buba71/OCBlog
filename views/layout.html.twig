@@ -14,17 +14,14 @@
             language: "fr_FR",
             branding: false,
             theme: "modern",
-            width: 900,
-            height:300,
-
-
+            
         });
     </script>
 
-    <title>OCBlog écrivain- {% block title %}{% endblock %}</title>
+    <title>Billet simple pour l'Alaska- {% block title %}{% endblock %}</title>
 </head>
 <body>
-    <div class="container">
+    <header>
         <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -33,17 +30,22 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{{ path('home') }}">OCBlog d'un écrivain</a>
+                    <a class="navbar-brand" href="{{ path('home') }}">Jean Forteroche</a>
                 </div>
                 <div class="collapse navbar-collapse" id="navbar-collapse-target">
                     <ul class="nav navbar-nav navbar-right">
+                    		<li>
+                    			<a href="{{path('home') }}">Acceuil</a>
+                    		</li>
+                    		<li>
+                    			<a href="#article">Articles</a>
                         {% if app.user and is_granted('ROLE_ADMIN') %}
                             <li class="{% if adminMenu is defined %}active{% endif %}"><a href="{{ path('admin') }}"><span class="glyphicon glyphicon-cog"></span> Administration</a></li>
                         {% endif %}
                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                             <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-user"></span> Bienvenu, {{ app.user.username }} <b class="caret"></b></a>
+                                <span class="glyphicon glyphicon-user"></span> {{ app.user.username }} connecté<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="{{ path('logout') }}">Se déconnecter</a></li>
                                 </ul>
@@ -51,23 +53,42 @@
                         {% else %}
                             <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-user"> Admin</span><b class="caret"></b></a>
+                                <span class="glyphicon glyphicon-user"></span><b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{ path('login') }}">Se connecter</a></li>
+                                    <li><a href="{{ path('login') }}">Se connecter à l'espace d'administration</a></li>
                                 </ul>
                             </li>
                         {% endif %}
                     </ul>
                 </div>
             </div><!-- /.container -->
+            
         </nav>
-        <div id="content">{% block content %}{% endblock %}</div>
-        <footer class="footer">
-            <a href="">OCBlog écrivain</a> footer.
-        </footer>
+
+  			<div class="container-fluid image">
+    		<h1>Billet simple pour l'Alaska 
+    			<span> de Jean Forteroche</span>
+            
+    		</h1>
+            <a href="#article"><button class="btn btn-custom">Articles</button></a>
+   
+  			</div>
+
+	</header>
+
+
+	<section>
+        <div class="container" id="content">
+            <div >
+        {% block content %}{% endblock %}
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+            <a href="">Copyright Jean Forteroche</a>
+    </footer>
     </div>
-
-
 
 
     <!-- jQuery -->
@@ -83,10 +104,6 @@
 
         $('.reply').click(function(e) {
             e.preventDefault();
-
-
-
-
             var $this = $(this);
             var parentId = $this.data('id');
             var $comment = $('#comment-' + parentId);
