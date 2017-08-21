@@ -3,6 +3,15 @@
 {% block title %}{{ article.title }}{% endblock %}
 
 {% block content %}
+<div class="container">
+
+    
+
+
+    <h2>{{ article.title }}</h2>
+    <p>{{ article.content |raw }}</p>
+
+    <h3>Commentaires</h3>
 
     {% for flashMessage in app.session.flashbag.get('success') %}
             <div class="alert alert-success alert-dismissible" role="alert">
@@ -10,12 +19,7 @@
                 {{ flashMessage }}
             </div>
     {% endfor %}
-
-
-    <h2>{{ article.title }}</h2>
-    <p>{{ article.content |raw }}</p>
-
-    <h3>Commentaires</h3>
+    
     {% for comment in comments %}
 
         {% include'comments.html.twig'with{'comment': comment} %}
@@ -23,6 +27,8 @@
     {% else %}
         Aucun commentaire.
     {% endfor %}
+</div>
+<div class="container">
     <form id="form-Comment" method="post" action="">
     <h3>Ajouter un commentaire</h3>
             <div class="form-group">
@@ -34,8 +40,8 @@
 
             </div>
     </form>
-
-        
+</div>
+</div>
 
 
 

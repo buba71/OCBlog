@@ -4,6 +4,7 @@
 {% block title %}Administration{% endblock %}
 
 {% block content %}
+<div class="container">
 <h2 class="text-center">{{ block('title') }}</h2>
 {% for flashMessage in app.session.flashbag.get('success') %}
 <div class="alert alert-success">
@@ -119,4 +120,6 @@
 
     </div>
 </div>
+</div>
+
 {% endblock %}

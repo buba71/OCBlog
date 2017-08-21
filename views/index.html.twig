@@ -3,13 +3,23 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-{% for article in articles %}
+<div class="container-fluid image">
+    		<h1>Billet simple pour l'Alaska 
+    			<span> de Jean Forteroche</span>
+    		</h1>
+            <a href="#article"><button class="btn btn-custom">Articles</button></a>
+
+</div>
+<div class="container">
 <article  id="article">
+{% for article in articles %}
+
     <h2><a class="articleTitle" href="{{ path('article', { 'id': article.id }) }}">{{ article.title }}</a></h2>
 
     <p>{{ article.content | raw}}</p>
-     ajouté le {{ article.date }}
+     Ajouté le {{ article.date }}
 
 </article>
+</div>
 {% endfor %}
 {% endblock %}
