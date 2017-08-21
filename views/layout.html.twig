@@ -65,17 +65,24 @@
             
         </nav>
 
-  			
+  			<div class="container-fluid image">
+    		<h1>Billet simple pour l'Alaska 
+    			<span> de Jean Forteroche</span>
+            
+    		</h1>
+            <a href="#article"><button class="btn btn-custom">Articles</button></a>
+   
+  			</div>
 
 	</header>
 
 
 	<section>
-
+        <div class="container" id="content">
+            <div >
         {% block content %}{% endblock %}
-
-
-
+            </div>
+        </div>
     </section>
 
     <footer class="footer">
@@ -113,7 +120,11 @@
 
         })
 
+
         });
+
+
+
     </script>
 </body>
 </html>

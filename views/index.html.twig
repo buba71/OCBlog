@@ -3,21 +3,12 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-	<div class="image">
-    		<h1>Billet simple pour l'Alaska 
-    			<span> de Jean Forteroche</span>
-            
-    		</h1>
-            <a href="#article"><button class="btn btn-custom">Articles</button></a>
-   
-  			</div>
 {% for article in articles %}
-<article  class="container" id="article">
-
+<article  id="article">
     <h2><a class="articleTitle" href="{{ path('article', { 'id': article.id }) }}">{{ article.title }}</a></h2>
 
     <p>{{ article.content | raw}}</p>
-     Ajouté le {{ article.date }}
+     ajouté le {{ article.date }}
 
 </article>
 {% endfor %}

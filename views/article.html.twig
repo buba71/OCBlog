@@ -11,32 +11,34 @@
             </div>
     {% endfor %}
 
-    <div class="container">
-        <h2>{{ article.title }}</h2>
-        <p>{{ article.content |raw }}</p>
 
-        <h3>Commentaires</h3>
-        {% for comment in comments %}
-            <div class="container">
-            {% include'comments.html.twig'with{'comment': comment} %}
+    <h2>{{ article.title }}</h2>
+    <p>{{ article.content |raw }}</p>
+
+    <h3>Commentaires</h3>
+    {% for comment in comments %}
+
+        {% include'comments.html.twig'with{'comment': comment} %}
+
+    {% else %}
+        Aucun commentaire.
+    {% endfor %}
+    <form id="form-Comment" method="post" action="">
+    <h3>Ajouter un commentaire</h3>
+            <div class="form-group">
+                <input type="hidden" name="parent_id" id="parent_id" value="0">
+                <textarea class="form-control" name="commentContent" placeholder= "Votre commentaire" required="true"></textarea>
             </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-custom" value="publier" />
 
-        {% else %}
-            Aucun commentaire.
-        {% endfor %}
-        <form id="form-Comment" method="post" action="">
-        <div class="container">
-        <h3>Ajouter un commentaire</h3>
-                <div class="form-group">
-                    <input type="hidden" name="parent_id" id="parent_id" value="0">
-                    <textarea class="form-control" name="commentContent" placeholder= "Votre commentaire" required="true"></textarea>
-                </div>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-custom" value="publier" />
+            </div>
+    </form>
 
-                </div>
-        </form>
-    </div>
-    </div>
+        
+
+
+
+
 
 {% endblock %}
