@@ -116,7 +116,7 @@ class HomeController {
         $article = $_GET['articleId'];
 
         $app['dao.comment']->signalComment($comment);
-        $app['session']->getFlashBag()->add('success', 'Commentaire signalé !');
+        $app['session']->getFlashBag()->add('success', 'Commentaire signalé à l\'administrateur du site !');
 
         return $app->redirect($app['url_generator']->generate('article', array('id'=>$article)));
 
