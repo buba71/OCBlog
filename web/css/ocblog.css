@@ -5,7 +5,7 @@ body
 
 .footer
 {
-	border-top: 1px solid #ccc;
+
 	padding-top: 10px;
   margin-top: 20px;
 	margin-bottom: 10px;
@@ -69,6 +69,7 @@ a
 .image
 {
     background-image: url(image.jpg);
+    width: 100%;
     max-width: 100%;
     height: auto;
     background-position:center;
@@ -105,6 +106,14 @@ header .container-fluid h1 span
 	font-size: 24px;
 	font-family: "parisienne";
 }
+
+article
+{
+  border-bottom: 1px solid #ccc;
+  
+  border-bottom-width:1;
+  margin-bottom: 50px;
+  }
 
 article h2
 {

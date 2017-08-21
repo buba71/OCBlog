@@ -1,11 +1,12 @@
-<div class= "panel panel-default" id="comment-{{ comment.id }}">
+<div class= " panel panel-default" id="comment-{{ comment.id }}">
 	<div class="panel-body">
 
 		{{ comment.content }}  <br /><br />
+		<em>Ajouté le {{ comment.date_comment }}</em><br />
 
 		{% if comment.depth <= 2 %}
 		<div class="control">
-		<em>Ajouté le {{ comment.date_comment }}</em><br />
+		
 		<button class ="btn btn-custom btn-sm reply"  id="reply-{{ comment.id }}" data-id = "{{ comment.id }}" style="text-align:right">Répondre</button>
 		{% endif %}
 
