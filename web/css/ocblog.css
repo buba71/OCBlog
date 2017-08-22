@@ -5,10 +5,19 @@ body
 
 .footer
 {
-	padding-top: 10px;
-  margin-top: 20px;
+  padding-top: 10px;
+  margin-top: 100px;
 	margin-bottom: 10px;
 	text-align: center;
+  border-top: 1px solid #ccc;
+}
+
+.title h1
+{
+  font-family: "parisienne";
+  color: black;
+  text-align: center;
+  margin-bottom: 50px;
 }
 
 .articleTitle:hover, .articleTitle:focus
@@ -81,23 +90,30 @@ a
 	  margin-bottom: 100px;
 	  padding-top: 30px;
     color: white;
+    font-family: "parisienne";
     text-align:center;
     text-shadow: white 0.1em 0.1em 0.7em;
 
 }
 
+
+
 .image button
 {
   width: 100px;
   height: 40px;
-  position: relative;
   font-size: 20px;
   text-align: center;
   text-decoration-color: white;
   right: 17%;
   background-color:  black;
-  margin-top: 100px;
+  margin-top:300px;
 
+}
+
+.image h1 small
+{
+  color: #52400f;
 }
 
 header .container-fluid h1 span
@@ -108,17 +124,21 @@ header .container-fluid h1 span
 	font-family: "parisienne";
 }
 
-article h2
+#article h2
 {
 	font-family: "parisienne";
 	color: black;
-
-
 }
 
 #article
 {
   border-bottom: 1px solid #ccc;
+}
+
+.article h2
+{
+  font-family: "parisienne";
+  font-size: 40px;
 }
 
 .btn-custom {

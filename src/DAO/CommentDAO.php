@@ -107,12 +107,6 @@ class CommentDAO extends DAO
             {
                 $sql = "SELECT com_id, depth FROM comment WHERE com_id = ?";
                 $com = $this->getDb()->fetchArray($sql, array($parent_id));
-
-               /** if ($com == false)
-                {
-                    throw new \Exception('Le parent_id n\'éxiste pas !');
-                }*/
-
                 $depth = $com['1'] + 1;
 
             }
@@ -149,8 +143,6 @@ class CommentDAO extends DAO
                         $comment->setId($id);
 
                     }
-
-
             }
 
     }
@@ -164,7 +156,6 @@ class CommentDAO extends DAO
 
 
         $signal = $signalComment['0'] + 1;
-
         $this->getDB()->update('comment', array('sign'=>$signal), array('com_id'=>$id));
     }
 

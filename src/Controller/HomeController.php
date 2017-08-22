@@ -37,38 +37,31 @@ class HomeController {
         $content = $_POST['commentContent'];
         $parent_id = $_POST['parent_id'];
 
-
-
+        /** 
+         *create a new comment enity
+         *
+         *
+         */
         $comment = new Comment();
         $date  = Date("Y-m-d");
         $comment->setDateComment($date);
-
-
         $comment->setArticle($article);
         $user = $app['dao.user']->find(3);
-        
-        
-
         $comment->setAuthor($user);
         $comment->setContent($content);
-
         $comment->setParentId($parent_id);
 
         $app['dao.comment']->save($comment);
         $app['session']->getFlashBag()->add('success', 'Votre commentaire a été publié.');
 
-        }
+                }
 
-        //}
-
-        /**
+         /**
          * Create an array of all comments with childrens
          *
          * @param $comments->findAllByArticle($id).
          */
         $comments = $app['dao.comment']->findAllByArticle($id);
-
-
         $comments_by_id=[];
 
         foreach ($comments as $comment)
@@ -94,7 +87,12 @@ class HomeController {
 
     }
 
-
+    /**
+     * generate comment Reply Form
+     *
+     *@param $app application
+     *@param parent_id
+     */
     public function subCommentAction (Application $app)
     {
         $parent_id = $_GET['parent_id'];
@@ -103,6 +101,7 @@ class HomeController {
             'parentId' => $parent_id
             ));
     }
+
     /**
      * Signal a comment
      *
