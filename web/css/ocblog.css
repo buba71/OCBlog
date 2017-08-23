@@ -1,6 +1,6 @@
 body
 {
-	padding-top: 50px;
+	padding-top:70px;
 }
 
 .footer
@@ -9,7 +9,6 @@ body
   margin-top: 100px;
 	margin-bottom: 10px;
 	text-align: center;
-  border-top: 1px solid #ccc;
 }
 
 .title h1
@@ -82,13 +81,13 @@ a
     background-image: url(../image/fond.jpg);
     max-width: 100%;
     height: auto;
-    background-position:center;
     background-size: cover;
-    background-repeat: repeat;
-    height: 550px;
+    background-position:center;
+    background-repeat:repeat;
+    height:700px;
     margin-top: -20px;
 	  margin-bottom: 100px;
-	  padding-top: 30px;
+    padding-top: 80px;
     color: white;
     font-family: "parisienne";
     text-align:center;
@@ -107,9 +106,10 @@ a
   text-decoration-color: white;
   right: 17%;
   background-color:  black;
-  margin-top:300px;
+  margin-top:30px;
 
 }
+
 
 .image h1 small
 {
